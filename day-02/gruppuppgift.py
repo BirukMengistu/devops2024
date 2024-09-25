@@ -15,7 +15,10 @@ def Booleandef():
 #function complex datatype
 def Booleandef():
   print(f'Boolean variable can have only two values - True or False. Or in other words, if a variable can have only these two values, we say that it s a Boolean variable.')
-  
+
+#function complex datatype
+def Complexdef():
+  print(f'The complex data type in python consists of two values, the first one is the real part of the complex number, and the second one is the imaginary part of the complex number.') 
 def mainMenu():
    print(f'\n')
    print(f'option 1: defin for sting')
@@ -36,6 +39,8 @@ while True:
      Booleandef()
    elif val == 4:
      Booleandef()
+   elif val == 5:
+     Complexdef()
    else:
      print('not option')
      
