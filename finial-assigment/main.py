@@ -1,5 +1,9 @@
 import psutil # type: ignore
 import time
+import reuseFunction as rf
+
+
+
 
 # Globala variabler
 alarms = {
@@ -9,6 +13,16 @@ alarms = {
 }
 # monitoring status 
 monitoring_active = False
+
+# Monitoring
+def start_monitoring():
+    global monitoring_active
+    monitoring_active = True
+    print("\nMonitoring started.\nPress any key to return to the main menu.")
+    input()
+
+
+
 
 # Main menu
 def main_menu():
@@ -27,9 +41,9 @@ def run():
         choice = main_menu()
         
         if choice == '1':
-            print('start_monitoring()')
+            start_monitoring()
         elif choice == '2':
-            print('list_active_monitoring()')
+            rf.list_active_monitoring(monitoring_active)
         elif choice == '3':
             print('alarm_menu()')
         elif choice == '4':
