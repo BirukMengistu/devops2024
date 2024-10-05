@@ -1,6 +1,16 @@
 import psutil # type: ignore
 import time
 import reuseFunction as rf
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 
@@ -18,7 +28,7 @@ monitoring_active = False
 def start_monitoring():
     global monitoring_active
     monitoring_active = True
-    print("\nMonitoring started.\nPress any key to return to the main menu.")
+    print(bcolors.OKBLUE+"\nMonitoring started.\nPress any key to return to the main menu."+bcolors.ENDC)
     input()
 
 
@@ -26,14 +36,14 @@ def start_monitoring():
 
 # Main menu
 def main_menu():
-    print("\nMain Menu:")
+    print(bcolors.HEADER + "\nMain Menu:")
     print("1. Start monitoring")
     print("2. List active monitoring")
     print("3. Create alarm")
     print("4. Show alarms")
-    print("5. Exit")
+    print("5. Exit" + bcolors.ENDC)
     
-    choice = input("\nChoose an option (1-5): ")
+    choice = input(bcolors.OKCYAN +"\nChoose an option (1-5): " + bcolors.ENDC)
     return choice
 
 def run():
@@ -43,11 +53,19 @@ def run():
         if choice == '1':
             start_monitoring()
         elif choice == '2':
+            print(bcolors.BOLD+"List active monitoring")
+            print(bcolors.OKGREEN+"Monitoring active: "+str(monitoring_active))
             rf.list_active_monitoring(monitoring_active)
+            print(bcolors.ENDC)
+            print(bcolors.ENDC)
         elif choice == '3':
-            print('alarm_menu()')
+            print(bcolors.WARNING )
+            rf.alarm_menu()
+            print(bcolors.ENDC)
         elif choice == '4':
-            print('show_alarms()')
+            print(bcolors.OKGREEN+'show_alarms()')
+            rf.show_alarms()
+            print(bcolors.ENDC)
         elif choice == '5':
             print("Exiting the application.")
             break
