@@ -5,14 +5,19 @@ import time
 def get_cpu_usage():
     return psutil.cpu_percent(interval=1)
 
+
+# function to get memory usage
 def get_memory_usage():
     memory = psutil.virtual_memory()
     return memory.percent, memory.used, memory.total
-
+    
+# function to get disk usage
 def get_disk_usage():
     disk = psutil.disk_usage('/')
     return disk.percent, disk.used, disk.total
 
+
+# list active Monitoring
 def list_active_monitoring(monitoring_active):
     if not monitoring_active:
         print("\nNo monitoring is active.")

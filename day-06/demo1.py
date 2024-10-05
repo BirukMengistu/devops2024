@@ -12,6 +12,8 @@ def bear_room():
     print("How are you going to move the bear?")
     bear_moved = False
 
+    #
+    # This is a loop that will run until the user enters a valid command
     while True:
         next = input("> ")
 
@@ -51,6 +53,7 @@ def gold_room():
 
     if how_much < 50:
         print("Nice, you're not greedy, you win!")
+        #
         exit(0) # This is the same as sys.exit(0)
     else:   
         dead("You greedy bastard!") 
