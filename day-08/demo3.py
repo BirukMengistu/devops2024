@@ -18,11 +18,17 @@ class bcolors:
     UNDERLINE = '\033[4m'
 print(bcolors.HEADER+"Class of Bil"+bcolors.ENDC)
 print(bcolors.OKBLUE+'*'*50+bcolors.ENDC)
-Toyota = store.Bil('Toyota','Corolla',2022 ,'blue')
+Toyota = store.Toyota('Toyota','Corolla',2022 ,'blue')
 
 Toyota.bil_info()
 
 print(bcolors.OKBLUE+'*'*100+bcolors.ENDC)
 
-Volvo = store.Bil('Volvo','V60',2021,'red')
+Volvo = store.Volvo('Volvo','V60',2021,'red')
 Volvo.bil_info()
+Volvo.__str__()
+print(bcolors.OKBLUE+'*'*100+bcolors.ENDC)
+
+BMW = store.BMW('BMW','X5',2020,'black')
+BMW.bil_info()
+BMW.__str__()
