@@ -8,3 +8,5 @@ lists.insert(len(lists),"orange")
 print(lists)
 lists.insert(1,"kiwi")
 print(lists)
+
+
