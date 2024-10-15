@@ -1,6 +1,9 @@
 """"Convert a function to be a static method.
 A static method does not receive an implicit first argument.
 To declare a static method, use this idiom:"""
+from colors import constant # type: ignore
+
+
 class Bil:
     numb_instance = 0
     type_of_bil = ''
@@ -59,6 +62,7 @@ class Volvo(Bil):
         'model': '',
         'frequency': 0
     }
+    #__init__() method, you define an instance attribute that takes its value from the user’s input.
     def __init__(self,brand,model,year,color):
         super().__init__(brand,model,year,color)
         self.brand = brand
@@ -72,6 +76,8 @@ class Volvo(Bil):
     def __eq__(self, other):
       if self.brand == other.brand and self.model == other.model:
         return True
+      else:
+          return False
 
 
 
@@ -80,6 +86,8 @@ Bil.bil_class_info = staticmethod(Bil.bil_class_info)
 Toyota1 = Toyota('Toyota','Corolla',2022 ,'blue')
 Toyota1.bil_info()
 Toyota1.__eq__(Toyota1)
+
+print(f'__dict__ {Toyota1.__dict__}')
 Toyota2= Toyota('Toyota','Yaris',2024,'blue')
 print(Toyota2.__eq__(Toyota2))
 Toyota2.bil_info()
