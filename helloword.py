@@ -1,2 +1,0 @@
-msg = "Helloword"
-print(msg)
