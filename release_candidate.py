@@ -29,3 +29,5 @@ print(output)
 
 output = kör_git_kommando(f"git push origin release-{version}")
 print(output)
+
+print(f"Kör 'checkout release-{version}':")
