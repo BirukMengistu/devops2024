@@ -36,7 +36,7 @@ class PcAlarmMonitor:
             print("4. Show Alarms")
             print("5. Exit"+bcolors.ENDC)
 
-            choice = input("\nSelect an option (1-5): ")
+            choice = input(bcolors.CYAN+"\nSelect an option (1-5): "+bcolors.ENDC)
 
             if choice == '1':
                 self.start_monitoring()
@@ -74,7 +74,7 @@ class PcAlarmMonitor:
             print(f"Memory Usage: {memory_usage}% ({memory_used / (1024 ** 3):.1f} GB out of {memory_total / (1024 ** 3):.1f} GB used)")
             print(f"Disk Usage: {disk_usage}% ({disk_used / (1024 ** 3):.1f} GB out of {disk_total / (1024 ** 3):.1f} GB used)")
         
-        input("\nPress any key to return to the main menu.")
+        input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
 
     # Alarm configuration menu
     def alarm_menu(self):
@@ -85,7 +85,7 @@ class PcAlarmMonitor:
             print("3. Disk Usage")
             print("4. Return to Main Menu"+bcolors.ENDC)
 
-            choice = input("\nSelect an option (1-4): ")
+            choice = input(bcolors.CYAN+"\nSelect an option (1-4): "+bcolors.ENDC)
 
             if choice == '1':
                 self.set_alarm('cpu')
@@ -133,7 +133,7 @@ class PcAlarmMonitor:
                 }
             with open(file_path, "a") as file:
                     file.write(json.dumps(new_data, indent=2) + "\n" )
-        input("\nPress any key to return to the main menu.")
+        input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
 
     # Run the application
     def run(self):
