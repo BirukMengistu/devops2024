@@ -5,6 +5,8 @@ import os
 from constant import bcolors
 
 file_path = "data.txt"
+json_objects = []
+
 class PcAlarmMonitor:
     def __init__(self):
         self.alarms = {
@@ -34,7 +36,8 @@ class PcAlarmMonitor:
             print("2. List Active Monitoring")
             print("3. Create Alarm")
             print("4. Show Alarms")
-            print("5. Exit"+bcolors.ENDC)
+            print("5. display Previous Alarms set")
+            print("6. Exit"+bcolors.ENDC)
 
             choice = input(bcolors.CYAN+"\nSelect an option (1-5): "+bcolors.ENDC)
 
@@ -47,6 +50,8 @@ class PcAlarmMonitor:
             elif choice == '4':
                 self.show_alarms()
             elif choice == '5':
+                self.show_previous_alarms()
+            elif choice == '6':
                 print("Exiting the application.")
                 break
             else:
@@ -69,11 +74,11 @@ class PcAlarmMonitor:
             cpu_usage = self.get_cpu_usage()
             memory_usage, memory_used, memory_total = self.get_memory_usage()
             disk_usage, disk_used, disk_total = self.get_disk_usage()
-
+            print(bcolors.BOLD+"\n Active Monitoring from System:")
             print(f"\nCPU Usage: {cpu_usage}%")
             print(f"Memory Usage: {memory_usage}% ({memory_used / (1024 ** 3):.1f} GB out of {memory_total / (1024 ** 3):.1f} GB used)")
             print(f"Disk Usage: {disk_usage}% ({disk_used / (1024 ** 3):.1f} GB out of {disk_total / (1024 ** 3):.1f} GB used)")
-        
+            print(bcolors.ENDC)
         input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
 
     # Alarm configuration menu
@@ -84,7 +89,7 @@ class PcAlarmMonitor:
             print("2. Memory Usage")
             print("3. Disk Usage")
             print("4. Return to Main Menu"+bcolors.ENDC)
-
+            print('-' * 30)
             choice = input(bcolors.CYAN+"\nSelect an option (1-4): "+bcolors.ENDC)
 
             if choice == '1':
@@ -115,11 +120,18 @@ class PcAlarmMonitor:
     # Show all alarms
     def show_alarms(self):
         print("\nConfigured Alarms:")
-        sorted_alarms = sorted(
-            [(k, v) for k, values in self.alarms.items() for v in values],
-            key=lambda x: x[0]
-        )
+        """  sorted_alarms = sorted(
+                    [(k, v) for k, values in self.alarms.items() for v in values],
+                    key=lambda x: x[0]
+                ) """
+            
+        sorted_alarms = []
+        for k, values in self.alarms.items(): # k = cpu, memory, disk , values = [10, 20, 30]
+         for v in values:
+           sorted_alarms.append((k, v))
 
+        sorted_alarms.sort(key=lambda x: x[0]) #(parameter) key: (Any) -> SupportsRichComparison
+        # Print alarms and save them to a file
         if not sorted_alarms:
             print(bcolors.MAGENTA+"No alarms configured."+bcolors.ENDC)
         else:
@@ -135,6 +147,22 @@ class PcAlarmMonitor:
                     file.write(json.dumps(new_data, indent=2) + "\n" )
         input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
 
+    # Show previous alarms
+    def show_previous_alarms(self):
+     print("\nPrevious Alarms:")
+     if not os.path.exists(file_path):
+            print(bcolors.MAGENTA+"No previous alarms."+bcolors.ENDC)
+     else:
+      try:
+         with open(file_path, "r") as file:
+          for line in file:
+            # Parse each line as a JSON object and add it to the list
+            json_objects.append(json.loads(line))
+            print(json.dumps(json_objects, indent=2))
+      except FileNotFoundError:
+            print(f"The file {file_path} does not exist.")
+     
+     input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
     # Run the application
     def run(self):
         self.main_menu()
