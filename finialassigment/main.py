@@ -4,7 +4,7 @@ import json
 import os
 from constant import bcolors
 
-file_path = "data.txt"
+file_path = "data.json"
 json_objects = []
 
 class PcAlarmMonitor:
@@ -39,7 +39,7 @@ class PcAlarmMonitor:
             print("5. display Previous Alarms set")
             print("6. Exit"+bcolors.ENDC)
 
-            choice = input(bcolors.CYAN+"\nSelect an option (1-5): "+bcolors.ENDC)
+            choice = input(bcolors.CYAN+"\nSelect an option (1-6): "+bcolors.ENDC)
 
             if choice == '1':
                 self.start_monitoring()
@@ -120,11 +120,7 @@ class PcAlarmMonitor:
     # Show all alarms
     def show_alarms(self):
         print("\nConfigured Alarms:")
-        """  sorted_alarms = sorted(
-                    [(k, v) for k, values in self.alarms.items() for v in values],
-                    key=lambda x: x[0]
-                ) """
-            
+     
         sorted_alarms = []
         for k, values in self.alarms.items(): # k = cpu, memory, disk , values = [10, 20, 30]
          for v in values:
@@ -143,8 +139,13 @@ class PcAlarmMonitor:
                     "timestamp": time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()),
                     "alarms": sorted_alarms
                 }
-            with open(file_path, "a") as file:
-                    file.write(json.dumps(new_data, indent=2) + "\n" )
+            with open(file_path, 'r') as file:
+             existing_data = json.load(file)
+            if existing_data:
+                    existing_data.append(new_data)
+                    with open(file_path, "w") as file:
+                        file.write(json.dumps(existing_data, indent=2) + "\n")
+           
         input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
 
     # Show previous alarms
@@ -154,11 +155,12 @@ class PcAlarmMonitor:
             print(bcolors.MAGENTA+"No previous alarms."+bcolors.ENDC)
      else:
       try:
-         with open(file_path, "r") as file:
-          for line in file:
-            # Parse each line as a JSON object and add it to the list
-            json_objects.append(json.loads(line))
-            print(json.dumps(json_objects, indent=2))
+          with open('data.json', 'r') as file:
+            data = json.load(file)
+
+         # Display JSON content
+          print(json.dumps(data, indent=4))
+
       except FileNotFoundError:
             print(f"The file {file_path} does not exist.")
      
