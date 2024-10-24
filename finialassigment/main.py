@@ -37,9 +37,10 @@ class PcAlarmMonitor:
             print("3. Create Alarm")
             print("4. Show Alarms")
             print("5. display Previous Alarms set")
-            print("6. Exit"+bcolors.ENDC)
+            print("6. Reset Alarms")
+            print("7. Exit"+bcolors.ENDC)
 
-            choice = input(bcolors.CYAN+"\nSelect an option (1-6): "+bcolors.ENDC)
+            choice = input(bcolors.CYAN+"\nSelect an option (1-7): "+bcolors.ENDC)
 
             if choice == '1':
                 self.start_monitoring()
@@ -52,6 +53,8 @@ class PcAlarmMonitor:
             elif choice == '5':
                 self.show_previous_alarms()
             elif choice == '6':
+                self.alarm_Reset()
+            elif choice == '7':
                 print("Exiting the application.")
                 break
             else:
@@ -80,7 +83,18 @@ class PcAlarmMonitor:
             print(f"Disk Usage: {disk_usage}% ({disk_used / (1024 ** 3):.1f} GB out of {disk_total / (1024 ** 3):.1f} GB used)")
             print(bcolors.ENDC)
         input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
+     
 
+    # Reset alarms
+    def alarm_Reset(self):
+        self.alarms = {
+            "cpu": [],
+            "memory": [],
+            "disk": []
+        }
+        print(bcolors.OKGREEN+"\nAlarms reset."+bcolors.ENDC)
+        input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
+        
     # Alarm configuration menu
     def alarm_menu(self):
         while True:
