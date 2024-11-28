@@ -1,0 +1,176 @@
+ystem development in Python
+
+Final task
+
+ 
+
+The final task is to write a monitoring application written in Python. Application collects information from the operating system and presents the information to a user.
+
+A user can interact with the application via a console to obtain information about CPU usage, memory usage, disk usage. When the user interacts with the application via the console menu, no configured alarms should be activated.
+
+ 
+
+The requirements for the application for approved level.
+
+ 
+
+The application is started, and then the user is presented with five options in the console.
+
+ 
+
+    Start monitoring
+
+Starts monitoring CPU usage, memory usage and disk usage. Note that no monitoring should start automatically at program startup.
+
+    List active monitoring
+
+Lists active monitoring as well as current monitoring status. If you have not started the monitoring, a text is shown that informs the user that no monitoring is active. Otherwise, the monitoring will be displayed, e.g.
+
+CPU Application: 35%
+
+Memory Usage: 65% (4.2 GB out of 8 used)
+
+Disk Usage: 80% (400 GB Out of 500 used)
+
+After this, the user is repromled to confirm by pressing enter.
+
+Press any key to go back to the main menu
+
+After this, the main menu for the user is again displayed.
+
+    Creating alarms
+
+If you choose this option, you get an additional menu where you can choose to configure alarms in three areas or go back to the main menu.
+
+Configure alarms
+
+    CPU usage
+    Memory use
+    Disk use
+    Back to the main menu
+
+After choosing an option, you get to choose a percentage level where the alarm is to be activated. Tex.
+
+Set the level of alarm between 0-100.
+
+After the user has selected a level, a confirmation is printed, then the main menu will appear again.
+
+Alarm for CPU use set to 80%.
+
+The level must be entered as a number between 1-100 and fed nonsense in, the user should receive an error message.
+
+    View alarm
+
+Lists all configured alarms. The alarm should be sorted on type when they are displayed. Example:
+
+    CPU alarm 70%
+    Discklarm 95%
+    Memory alarm 80%
+    Memory alarm 90%
+
+After this, the user is repromled to confirm by pressing enter.
+
+Press any key to go back to the main menu
+
+Note that you can have several alarms of the same type.
+
+ 
+
+    Start monitoring mode
+
+Starts a monitoring mode. The user is walking that the monitoring mode has been started, then loops a string at regular intervals that notify the user that the monitoring is active and that you can press any button to return to the main menu.
+
+Monitoring is active, press any key to return to the menu.
+
+If an alarm is triggered when the monitoring is active, it is printed in the console. T.g.:
+
+***WARNING, ALARM ACTIVACY, CPU USATING OVERESTING 80%***
+
+ 
+
+Non-functional requirements for the application of G level
+
+The program shall consist of at least one number of files with active- use code. I.e. Not all code should be written in a file.
+
+The program should use objects where it fits.
+
+The program should be written with functions.
+
+The program should include functional programming in at least one place. e.g. when sorting alarms before viewing.
+
+The code should be well written, i.e. Easy-to-understand variable names and function names, comments where it fits and a good structure.
+
+The code should be bug-free. The functionality described should always work properly.
+
+The code should be able to handle the user input inaccoma with incorrect input / nonsense without breaking. Not reasonable input sanitization shall exist.
+
+ 
+
+The requirements for the application for well-approved level.
+
+ 
+
+For well-approved level, you need to add three functions to the program. First, logging should be added. That is, all events in the program from the program startup, all user inout, all configuration changes should be saved in a log file.
+
+Everything logged to the log file should contain:
+
+Date _Tid _ Log. Tex.
+
+20/9/2024_15:05_CPU_Usage alarm_Configured_80_Procent
+
+20/9/2024_15:09_Transposition/started
+
+20/9/2024_15:16_CPU_Usable alarm_enabled_80_Procentage
+
+ 
+
+    Remove alarms
+
+The second functionality to be added is the ability to remove configured alarms. This is done through a new menu selection to remove alarms.
+
+If you choose this option, you will get a list of alarms that are configured. Then you can choose an alarm to remove by pressing the corresponding number. For example,
+
+Select a configured alarm to remove:
+
+    CPU alarm 70%
+    Memory alarm 80%
+    Memory alarm 90%
+    Discklarm 95%
+
+After removing an alarm, you go back to the main menu.
+
+ 
+
+The last thing that is added is that all alarms that are created and persisted to the disk. I.e. Saved in a suitable file format (json). When the program is started, previously configured alarms and the text loading previously configured alarms...
+
+Note that this affects G part menu items, for example, you choose to display all active alarms, both those configured while reading at the start-up of the program should be displayed.
+
+ 
+
+Non-functional requirements for VG level
+
+All requirements for approved level and:
+
+The code should be very well written, i.e. Easy to understand variable names and function names, comments where it fits and a very good structure. This also applies to log files.
+
+Examples of this are that if you have multiple CPU usage alarms configured, only the closest should be activated. I.e. If you have set up alarms that are activated at CPU use at 60%, 70% and 80%, only 80% level should be activated if CPU usage would jump up to 95% at a measuring point.
+
+Another example is that log files are created and saved each time the program is started. These are dynamically named based on the date and time when the log file was created and then they are replenished as long as the program is running.
+
+ 
+
+Option-free additions to the task. (Plus on the edge)
+
+    Send an email at the alert. (Tips use sendgrid, you can register for free on sendgrid.com and access a number of emails every month) This makes the program more useful! Fun! Libraries needed:
+
+from sendgrid import SendGridAPICliENT
+
+from sendgrid.helpers.mail import Mail
+
+ 
+
+    Version manage the entire development at GitHub. Use trunk-based development and create feature branches for each new functionality added to the program. Highly recommended for everyone regardless of G or VG level.
+
+ 
+
+    Create a simple graphical interface to the application that shows active alarms and percentage levels in real time.

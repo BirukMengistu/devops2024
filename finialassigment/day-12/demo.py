@@ -37,9 +37,3 @@ for monitor in sorted_monitoring:
 
 #Higher Order Functions
 
-def greet():
-    return 'Hello'
-
-def call_func(greet):
-    return greet()
-call_func(greet)

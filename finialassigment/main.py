@@ -1,4 +1,5 @@
-import psutil
+
+import psutil # type: ignore
 import time
 import json
 import os
@@ -27,11 +28,23 @@ class PcAlarmMonitor:
     def get_disk_usage(self):
         disk = psutil.disk_usage('/')
         return disk.percent, disk.used, disk.total
+    
+    def get_system_usage(self):
+        """Fetch system usage stats."""
+        cpu = psutil.cpu_percent(interval=1)
+        memory = psutil.virtual_memory()
+        disk = psutil.disk_usage('/')
+        return {
+            "CPU": cpu,
+            "Memory": memory.percent,
+            "Disk": disk.percent
+        }
 
     # Main menu
     def main_menu(self):
         while True:
             print(bcolors.OKGREEN+"\nMain Menu:")
+            print("0. monitoring_mode")
             print("1. Start Monitoring")
             print("2. List Active Monitoring")
             print("3. Create Alarm")
@@ -42,7 +55,12 @@ class PcAlarmMonitor:
 
             choice = input(bcolors.CYAN+"\nSelect an option (1-7): "+bcolors.ENDC)
 
-            if choice == '1':
+            if choice == '0':
+                if not self.monitoring_active:
+                    self.monitoring_mode()
+                else:
+                    print("Monitoring is already active.")
+            elif choice == '1':
                 self.start_monitoring()
             elif choice == '2':
                 self.list_active_monitoring()
@@ -60,6 +78,25 @@ class PcAlarmMonitor:
             else:
                 print("Invalid choice. Please try again.")
 
+    def monitoring_mode(self):
+        """Run the monitoring loop."""
+        self.monitoring_active = True
+        print("Monitoring started. Press Ctrl+C to stop.")
+
+        try:
+            while True:
+                usage = self.get_system_usage()
+                print("Current usage:", usage)
+
+                for key, threshold in self.alarms.items():
+                    if threshold and usage[key] > threshold:
+                        print(f"ALARM! {key} usage exceeded {threshold}%: {usage[key]}%")
+
+                time.sleep(5)  # Pause for 5 seconds
+        except KeyboardInterrupt:
+            print("\nMonitoring stopped.")
+        finally:
+            self.monitoring_active = False
     # Start monitoring
     def start_monitoring(self):
         if self.monitoring_active:
@@ -94,7 +131,7 @@ class PcAlarmMonitor:
         }
         print(bcolors.OKGREEN+"\nAlarms reset."+bcolors.ENDC)
         input(bcolors.CYAN+"\nPress any key to return to the main menu."+bcolors.ENDC)
-        
+
     # Alarm configuration menu
     def alarm_menu(self):
         while True:
@@ -125,6 +162,7 @@ class PcAlarmMonitor:
                 if 0 <= level <= 100:
                     self.alarms[alarm_type].append(level)
                     print(f"Alarm for {alarm_type} usage set to {level}%.")
+                    
                     break
                 else:
                     print("Level must be between 0 and 100.")
